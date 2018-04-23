@@ -9,7 +9,7 @@ import java.util.*;
  *
  */
 public abstract class Grafo<T> {
-
+//Wololo
 	protected Map<Integer, Vertice<T>> vertices;
 	protected Map<Integer,Map<Integer,Integer>> arcos;
 	
