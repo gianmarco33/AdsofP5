@@ -1,4 +1,4 @@
-package grafos;
+package adsof1718.grafos;
 
 public class Vertice<T> {
 	private final int id;
@@ -8,6 +8,6 @@ public class Vertice<T> {
 		this.id = id1;
 		this.datos = datos;
 	}
-	public int getId() {return id;}
+	public Integer getId() {return id;}
 	public T getDatos() {return datos;}
 }
