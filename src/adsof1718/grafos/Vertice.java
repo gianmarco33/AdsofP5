@@ -10,4 +10,8 @@ public class Vertice<T> {
 	}
 	public Integer getId() {return id;}
 	public T getDatos() {return datos;}
+	
+	public String toString() {	
+		return datos.toString();// los vértices del grafo han de presentarse ORDENADOS POR IDENTIFICADOR
+	}
 }
