@@ -22,6 +22,7 @@ public abstract class Grafo<T> {
 	protected Vertice<T> addVertice(int id, T datos){
 		Vertice<T> newVertice = new Vertice<T>(id,datos);
 		vertices.put(id, newVertice);
+		//Vaciar el mapa
 		return newVertice;
 	}
 	public List<Vertice<T>> getVertices(){

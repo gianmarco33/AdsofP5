@@ -3,7 +3,6 @@
  */
 package adsof1718.grafos.got;
 
-import adsof1718.grafos.Vertice;
 
 /**
  * @author gianmarco
@@ -53,6 +52,11 @@ public class PersonajeGOT{
 	 */
 	public void setCasa(String casa) {
 		this.casa = casa;
+	}
+	
+	@Override
+	public String toString() {
+		return "{Nombre: " +nombre +  ", Casa: " +casa+ "}";
 	}
 	
 	
