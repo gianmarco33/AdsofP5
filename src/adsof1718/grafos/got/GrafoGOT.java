@@ -5,6 +5,7 @@ package adsof1718.grafos.got;
 
 import adsof1718.grafos.*;
 import java.util.*;
+import java.util.function.*;
 import java.util.stream.Collectors;
 import java.io.*;
 
@@ -51,19 +52,36 @@ public class GrafoGOT extends GrafoNoDirigido<PersonajeGOT>{
 	}
 	
 	public List<String> casas(){
-		return vertices.values().stream().map(Vertice<PersonajeGOT>::getDatos).map(PersonajeGOT::getCasa).filter(s -> !s.equals("null")).distinct().sorted().collect(Collectors.toList());
+		return vertices.values().stream().map(Vertice<PersonajeGOT>::getDatos).map(PersonajeGOT::getCasa)
+				.filter(s -> !s.equals("null")).distinct().sorted().collect(Collectors.toList());
 	}
 	
-	//Este hay que hacer un predicate WOT
 	public List<String> miembrosCasa(String casa){
-		return vertices.values().stream().map(Vertice<PersonajeGOT>::getDatos).filter(s -> s.getCasa() == "casa").map(PersonajeGOT::getNombre).sorted().collect(Collectors.toList());
+		Predicate<PersonajeGOT> predicadoCasa = new Predicate<PersonajeGOT>() {		 
+			@Override
+			 public boolean test(PersonajeGOT p) {
+				return p.getCasa().equals(casa);
+			 }	 
+			};
+		return vertices.values().stream().map(Vertice<PersonajeGOT>::getDatos).filter(predicadoCasa).map(PersonajeGOT::getNombre).sorted().collect(Collectors.toList());
 	}
 	
 	public Map<String, Integer> gradoPersonajes(){
-		return null;
+		Map<String, Integer> mapita = new HashMap<String,Integer>();
+		for(Vertice<PersonajeGOT> pers : vertices.values()) {
+			mapita.put(pers.getDatos().getNombre(),getVecinosDe(pers).size());
+		}
+		
+		//return vertices.values().stream().collect(Collectors.toMap(PersonajeGOT::getNombre, ));       
+				//map(Vertice<PersonajeGOT>::getDatos).collect(Collectors.toMap(PersonajeGOT::getNombre,PersonajeGOT::getId));
+		return mapita;
 	}
 	
 	public Map<String, Integer> gradoPonderadoPersonajes(){
+		Map<String, Integer> mapita = new HashMap<String,Integer>();
+		for(Vertice<PersonajeGOT> pers : vertices.values()) {
+			mapita.put(pers.getDatos().getNombre(),getVecinosDe(pers).forEach(p -> arcos.get(pers.getDatos().getId()).get(p.getDatos().getId())));
+		}
 		return null;
 	}
 	

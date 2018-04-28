@@ -9,18 +9,26 @@ public class PruebaApartado2 {
 		g = new GrafoGOT("got-s01-vertices.csv", "got-s01-arcos.csv");
 		//System.out.println(grafo.getVertices());
 		
-		System.out.println(g);
+		//System.out.println(g);
 		
-		Vertice<PersonajeGOT> v1 = g.getVertice("Arya Stark");
-		System.out.println(v1);
+		//Vertice<PersonajeGOT> v1 = g.getVertice("Arya Stark");
+		//System.out.println(v1);
 		
-		List<String> lCasas = g.casas();
-		/*for(String casa : lCasas)
+		/*List<String> lCasas = g.casas();
+		for(String casa : lCasas)
 			System.out.println(casa);*/
 		
-		List<String> lPersXCasa = g.miembrosCasa("Stark");
+		/*List<String> lPersXCasa = g.miembrosCasa("Stark");
 		for(String pers : lPersXCasa)
-			System.out.println(pers);
+			System.out.println(pers);*/
+		
+		
+		Map<String,Integer> mapa = g.gradoPersonajes();
+		System.out.println(mapa);
+		
+		
+		
+		
 	}
 	
 }
