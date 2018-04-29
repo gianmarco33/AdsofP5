@@ -30,14 +30,9 @@ public class GrafoGOT extends GrafoNoDirigido<PersonajeGOT>{
 			ar = str.split(",");
 			PersonajeGOT p = new PersonajeGOT(Integer.parseInt(ar[0]), ar[1], ar[2]);
 			Vertice<PersonajeGOT> v = new Vertice<PersonajeGOT>(Integer.parseInt(ar[0]),p);
-			//vertices.put(Integer.parseInt(ar[0]), v);
-			//Error aqui
 			vertices.put(Integer.parseInt(ar[0]), v);
 		}
-		
-		/*for(Vertice<PersonajeGOT> pg : vertices.values())
-			System.out.println(pg);*/
-		
+
 		csvVertices = new BufferedReader(new FileReader("csv/" + ficheroArcos));
 		
 		while((str = csvVertices.readLine()) != null) {
@@ -47,6 +42,7 @@ public class GrafoGOT extends GrafoNoDirigido<PersonajeGOT>{
 	}
 	
 	
+	//Cambiar el collect por un reduce() ya que collect es para collecciones y solo quiero un valor?
 	public Vertice<PersonajeGOT> getVertice(String nombre){
 		return vertices.values().stream().filter(p -> p.getDatos().getNombre().equals(nombre)).collect(Collectors.toList()).get(0);	
 	}
@@ -67,26 +63,39 @@ public class GrafoGOT extends GrafoNoDirigido<PersonajeGOT>{
 	}
 	
 	public Map<String, Integer> gradoPersonajes(){
-		Map<String, Integer> mapita = new HashMap<String,Integer>();
-		for(Vertice<PersonajeGOT> pers : vertices.values()) {
-			mapita.put(pers.getDatos().getNombre(),getVecinosDe(pers).size());
-		}
 		
-		//return vertices.values().stream().collect(Collectors.toMap(PersonajeGOT::getNombre, ));       
-				//map(Vertice<PersonajeGOT>::getDatos).collect(Collectors.toMap(PersonajeGOT::getNombre,PersonajeGOT::getId));
+		//Function<Vertice<PersonajeGOT>,Integer> vecinos = x -> getVecinosDe(x).size();
+		
+		Map<String, Integer> mapita = new HashMap<String,Integer>();
+		for(Vertice<PersonajeGOT> pers : vertices.values()) mapita.put(pers.getDatos().getNombre(),getVecinosDe(pers).size());
+		return mapita;
+		//map(Vertice<PersonajeGOT>::getDatos).collect(Collectors.toMap(PersonajeGOT::getNombre,PersonajeGOT::getId));
+		//return mapita;
+	}
+	
+	public Map<String, Double> gradoPonderadoPersonajes(){
+		List<Vertice<PersonajeGOT>> vec = new ArrayList<Vertice<PersonajeGOT>>();
+		Double auxPeso = 0.0;
+		Map<String, Double> mapita = new HashMap<String,Double>();
+		for(Vertice<PersonajeGOT> pers : vertices.values()) {
+			vec = getVecinosDe(pers);
+			auxPeso = 0.0;
+			for(Vertice<PersonajeGOT> v : vec) {
+				auxPeso += arcos.get(pers.getDatos().getId()).get(v.getDatos().getId());
+			}
+			mapita.put(pers.getDatos().getNombre(),auxPeso);
+			//mapita.put(pers.getDatos().getNombre(),getVecinosDe(pers).forEach(p -> arcos.get(pers.getDatos().getId()).get(p.getDatos().getId())));
+		}
 		return mapita;
 	}
 	
-	public Map<String, Integer> gradoPonderadoPersonajes(){
-		Map<String, Integer> mapita = new HashMap<String,Integer>();
-		for(Vertice<PersonajeGOT> pers : vertices.values()) {
-			mapita.put(pers.getDatos().getNombre(),getVecinosDe(pers).forEach(p -> arcos.get(pers.getDatos().getId()).get(p.getDatos().getId())));
-		}
-		return null;
-	}
-	
-	public Map<String, Integer> personajesRelevantes(){
-		return null;
+	public Map<String, Double> personajesRelevantes(){
+
+		Map<String, Double> mapita = gradoPonderadoPersonajes();
+		
+		Double media = mapita.values().stream().reduce(0.0, Double::sum) / mapita.keySet().size();
+		
+		return mapita.entrySet().stream().filter(p -> p.getValue() > media).collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue));
 	}
 	
 	

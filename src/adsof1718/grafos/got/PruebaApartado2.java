@@ -23,7 +23,13 @@ public class PruebaApartado2 {
 			System.out.println(pers);*/
 		
 		
-		Map<String,Integer> mapa = g.gradoPersonajes();
+		/*Map<String,Integer> mapa = g.gradoPersonajes();
+		System.out.println(mapa);*/
+		
+		/*Map<String,Double> mapa = g.gradoPonderadoPersonajes();
+		System.out.println(mapa);*/
+		
+		Map<String,Double> mapa = g.personajesRelevantes();
 		System.out.println(mapa);
 		
 		
