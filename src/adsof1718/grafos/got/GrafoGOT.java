@@ -59,34 +59,17 @@ public class GrafoGOT extends GrafoNoDirigido<PersonajeGOT>{
 				return p.getCasa().equals(casa);
 			 }	 
 			};
-		return vertices.values().stream().map(Vertice<PersonajeGOT>::getDatos).filter(predicadoCasa).map(PersonajeGOT::getNombre).sorted().collect(Collectors.toList());
+		return vertices.values().stream().map(Vertice<PersonajeGOT>::getDatos)
+				.filter(predicadoCasa).map(PersonajeGOT::getNombre).sorted().collect(Collectors.toList());
 	}
 	
 	public Map<String, Integer> gradoPersonajes(){
-		
-		//Function<Vertice<PersonajeGOT>,Integer> vecinos = x -> getVecinosDe(x).size();
-		
-		Map<String, Integer> mapita = new HashMap<String,Integer>();
-		for(Vertice<PersonajeGOT> pers : vertices.values()) mapita.put(pers.getDatos().getNombre(),getVecinosDe(pers).size());
-		return mapita;
-		//map(Vertice<PersonajeGOT>::getDatos).collect(Collectors.toMap(PersonajeGOT::getNombre,PersonajeGOT::getId));
-		//return mapita;
+		return vertices.values().stream().collect(Collectors.toMap(v -> v.getDatos().getNombre(), v -> getVecinosDe(v).size()));
 	}
 	
 	public Map<String, Double> gradoPonderadoPersonajes(){
-		List<Vertice<PersonajeGOT>> vec = new ArrayList<Vertice<PersonajeGOT>>();
-		Double auxPeso = 0.0;
-		Map<String, Double> mapita = new HashMap<String,Double>();
-		for(Vertice<PersonajeGOT> pers : vertices.values()) {
-			vec = getVecinosDe(pers);
-			auxPeso = 0.0;
-			for(Vertice<PersonajeGOT> v : vec) {
-				auxPeso += arcos.get(pers.getDatos().getId()).get(v.getDatos().getId());
-			}
-			mapita.put(pers.getDatos().getNombre(),auxPeso);
-			//mapita.put(pers.getDatos().getNombre(),getVecinosDe(pers).forEach(p -> arcos.get(pers.getDatos().getId()).get(p.getDatos().getId())));
-		}
-		return mapita;
+		return vertices.values().stream().collect(Collectors.toMap(v -> v.getDatos().getNombre(), 
+				v -> arcos.get(v.getDatos().getId()).values().stream().reduce(0.0,Double::sum)));						
 	}
 	
 	public Map<String, Double> personajesRelevantes(){
