@@ -12,5 +12,8 @@ package adsof1718.grafos.got.simulador;
 public abstract class Observador {
 	protected Sujeto sujeto;
 	
+	/**
+	 * Metodo por el cual un Observador actualizara su estado.
+	 */
 	public abstract void update();
 }

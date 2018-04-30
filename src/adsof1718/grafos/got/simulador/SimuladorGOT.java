@@ -22,6 +22,10 @@ public class SimuladorGOT extends Sujeto{
 	public PersonajeGOT personajeOrigen;
 	public List<PersonajeGOT> personajesDestino;
 	
+	/**
+	 * Constructor de SimuladorGOT
+	 * @param redSocial Grafo de vertices
+	 */
 	public SimuladorGOT(GrafoGOT redSocial) {
 		this.redSocial = redSocial;
 		this.personajesDestino = new ArrayList<PersonajeGOT>();
@@ -31,39 +35,48 @@ public class SimuladorGOT extends Sujeto{
 	
 	
 	/**
-	 * @return the redSocial
+	 * Devuelve el grafo
+	 * @return Grafo 
 	 */
 	public GrafoGOT getRedSocial() {
 		return redSocial;
 	}
 
-
 	/**
-	 * @param redSocial the redSocial to set
+	 * Devuelve el Personaje origen
+	 * @return Personaje origen
 	 */
-	public void setRedSocial(GrafoGOT redSocial) {
-		this.redSocial = redSocial;
-	}
-
 	public PersonajeGOT getOrigen() {
 		return personajeOrigen;
 	}
 	
+	/**
+	 * Devuelve la lista de personajes destino.
+	 * @return
+	 */
 	public List<PersonajeGOT> getDestinos(){
 		return personajesDestino;
 	}
 
-
+	/**
+	 * @see Sujeto#attach(ObservadorGOT)
+	 */
 	@Override
 	public void attach(ObservadorGOT o) {
 		listaObservadores.add(o);
 	}
 
+	/**
+	 * @see Sujeto#interaccion(String)
+	 */
 	@Override
 	public void detach(ObservadorGOT o) {
 		listaObservadores.remove(o);
 	}
 
+	/**
+	 * @see Sujeto#notificar()
+	 */
 	@Override
 	public void notificar() {
 		/*for(ObservadorGOT obG : listaObservadores)
@@ -72,6 +85,9 @@ public class SimuladorGOT extends Sujeto{
 		listaObservadores.stream().filter(v -> v.getPersonaje().equals(personajeOrigen)).forEach(v -> v.update());
 	}
 	
+	/**
+	 * @see Sujeto#interaccion(String)
+	 */
 	@Override
 	public void interaccion(String nombre) {
 		Vertice<PersonajeGOT> origen = redSocial.getVertice(nombre);
@@ -87,6 +103,10 @@ public class SimuladorGOT extends Sujeto{
 		notificar();		
 	}
 	
+	/**
+	 * Metodo toString de SimuladorGOT
+	 */
+	@Override
 	public String toString() {
 		String ret = "";
 		for(ObservadorGOT o: listaObservadores) {
@@ -99,16 +119,20 @@ public class SimuladorGOT extends Sujeto{
 	public static void main(String[] args) throws Exception {
 		GrafoGOT g = new GrafoGOT("got-s01-vertices.csv", "got-s01-arcos.csv");
 		SimuladorGOT simulador = new SimuladorGOT(g);
-	
-		for(Vertice<PersonajeGOT> vP : g.getVertices()) {
-			new ObservadorGOT(simulador, vP.getDatos());
-		}
-
 		List<String> nombresPersonajes = g.getVertices().stream().map(v -> v.getDatos().getNombre()).collect(Collectors.toList());
-		
-		
+		int numObservadores = 20;
 		int n = 1000;
 		Random rand = new Random();
+	
+		//Creamos numObservadores Observadores.
+		for (int i=0; i< numObservadores; i++) {
+			int aleatorioVertice = rand.nextInt(nombresPersonajes.size());
+			new ObservadorGOT(simulador, g.getVertices().get(aleatorioVertice).getDatos());
+		}
+		/*for(Vertice<PersonajeGOT> vP : g.getVertices()) {
+			new ObservadorGOT(simulador, vP.getDatos());
+		}*/
+
 		
 		for(int i=0; i<n; i++) {
 			int aleatorioVertice = rand.nextInt(nombresPersonajes.size());
@@ -120,8 +144,5 @@ public class SimuladorGOT extends Sujeto{
 		
 	}
 
-
-
-	
 	
 }

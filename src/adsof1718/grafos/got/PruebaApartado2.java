@@ -6,34 +6,31 @@ public class PruebaApartado2 {
 		GrafoGOT g;
 		
 		g = new GrafoGOT("got-s01-vertices.csv", "got-s01-arcos.csv");
-		//System.out.println(grafo.getVertices());
-		
-		//System.out.println(g);
-		
-		//Vertice<PersonajeGOT> v1 = g.getVertice("Arya Stark");
-		//System.out.println(v1);
-		
-		/*List<String> lCasas = g.casas();
-		for(String casa : lCasas)
+
+		System.out.println("Casas del grafo: ");
+		List<String> lCasas = g.casas();
+		System.out.println("\t" + lCasas + "\n");
+		/*for(String casa : lCasas)
 			System.out.println(casa);*/
 		
-		/*List<String> lPersXCasa = g.miembrosCasa("Stark");
-		for(String pers : lPersXCasa)
+		System.out.println("Miembros de la casa Stark: ");
+		List<String> lPersXCasa = g.miembrosCasa("Stark");
+		System.out.println("\t" + lPersXCasa + "\n");
+		/*for(String pers : lPersXCasa)
 			System.out.println(pers);*/
 		
+		System.out.println("Grado de los personajes: ");
+		Map<String,Integer> mapaGrados = g.gradoPersonajes();
+		System.out.println("\t" + mapaGrados + "\n");
 		
-		/*Map<String,Integer> mapa = g.gradoPersonajes();
-		System.out.println(mapa);*/
+		System.out.println("Grado ponderado de los personajes: ");
+		Map<String,Double> mapaPonderado = g.gradoPonderadoPersonajes();
+		System.out.println("\t" + mapaPonderado + "\n");
 		
-		/*Map<String,Double> mapa = g.gradoPonderadoPersonajes();
-		System.out.println(mapa);*/
-		
-		Map<String,Double> mapa = g.personajesRelevantes();
-		System.out.println(mapa);
-		
-		
-		
-		
+		System.out.println("Personajes relevantes: ");
+		Map<String,Double> mapaRelevantes = g.personajesRelevantes();
+		System.out.println("\t" + mapaRelevantes + "\n");
+
 	}
 	
 }

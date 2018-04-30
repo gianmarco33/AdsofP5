@@ -24,6 +24,11 @@ public class ObservadorGOT extends Observador{
 	
 	private PersonajeGOT personaje;
 	
+	/**
+	 * Constructor de la clase ObservadorGOT
+	 * @param s Simulador al que pertenecera.
+	 * @param p Personaje al que hara referencia.
+	 */
 	public ObservadorGOT(SimuladorGOT s, PersonajeGOT p) {
 		this.sujeto = s;
 		personaje = p;
@@ -34,22 +39,42 @@ public class ObservadorGOT extends Observador{
 		s.attach(this);
 	}
 
+	/**
+	 * Devuelve el personaje al que hace referencia.
+	 * @return Personaje del observador.
+	 */
 	public PersonajeGOT getPersonaje() {
 		return personaje;
 	}
 	
+	/**
+	 * Devuelve el numero de interacciones totales
+	 * @return numero de interacciones totales.
+	 */
 	public int getNumInteraccionesTotales(){
 		return numInteraccionesTotales;
 	}
 	
+	/**
+	 * Devuelve el numero de interacciones con su propia casa
+	 * @return numero de interacciones con su casa.
+	 */
 	public int getNumInteraccionesCasa(){
 		return numInteraccionesCasa;
 	}
 	
+	/**
+	 * Devuelve el numero de interacciones con casas ajenas
+	 * @return numero de interacciones con casas ajenas.
+	 */
 	public int getNumInteraccionesOtrasCasas(){
 		return numInteraccionesOtrasCasas;
 	}
 	
+	/**
+	 * Metodo toString de ObservadorGOT
+	 */
+	@Override
 	public String toString() {
 		String ret = "";
 		for(String s : InteraccionesCasas.keySet()) {
@@ -66,7 +91,9 @@ public class ObservadorGOT extends Observador{
 	}
 	
 	
-	
+	/**
+	 * @see Observador#update()
+	 */
 	@Override
 	public void update() {
 		SimuladorGOT simulador = (SimuladorGOT) super.sujeto;
@@ -92,7 +119,5 @@ public class ObservadorGOT extends Observador{
 				else
 					InteraccionesCasas.put(p.getCasa(), InteraccionesCasas.get(p.getCasa())+1);
 		}
-	}
-	
-	
+	}	
 }
