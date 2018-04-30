@@ -45,10 +45,6 @@ public class SimuladorGOT extends Sujeto{
 		this.redSocial = redSocial;
 	}
 
-	public void addObservador(ObservadorGOT o) {
-		listaObservadores.add(o);
-	}
-
 	public PersonajeGOT getOrigen() {
 		return personajeOrigen;
 	}
@@ -70,6 +66,9 @@ public class SimuladorGOT extends Sujeto{
 
 	@Override
 	public void notificar() {
+		/*for(ObservadorGOT obG : listaObservadores)
+			if(obG.getPersonaje().equals(personajeOrigen))
+				obG.update();*/
 		listaObservadores.stream().filter(v -> v.getPersonaje().equals(personajeOrigen)).forEach(v -> v.update());
 	}
 	
@@ -81,35 +80,30 @@ public class SimuladorGOT extends Sujeto{
 		
 		personajeOrigen = origen.getDatos();
 		
-		for(Vertice<PersonajeGOT> p : redSocial.getVecinosDe(origen)) {
-			if(redSocial.getPesoDe(origen, p)/denominador > probInteraccion) {
+		for(Vertice<PersonajeGOT> p : redSocial.getVecinosDe(origen))
+			if(probInteraccion < (redSocial.getPesoDe(origen, p)/denominador))
 				personajesDestino.add(p.getDatos());
-				//notificar(p.getDatos());
-			}		
-		}
-		notificar();
-		//redSocial.getVecinosDe(origen).stream().filter(v -> redSocial.getPesoDe(origen, v)/denominador > probInteraccion)
-		//	.map(v -> personajesDestino.add(v.getDatos()));
 		
+		notificar();		
 	}
 	
 	public String toString() {
 		String ret = "";
-		for(ObservadorGOT o: listaObservadores)
-			ret += o.toString();
-		
+		for(ObservadorGOT o: listaObservadores) {
+			if(o.getNumInteraccionesTotales() !=0)
+				ret += o.toString();
+		}
 		return ret;
 	}
 	
 	public static void main(String[] args) throws Exception {
 		GrafoGOT g = new GrafoGOT("got-s01-vertices.csv", "got-s01-arcos.csv");
 		SimuladorGOT simulador = new SimuladorGOT(g);
-		
+	
 		for(Vertice<PersonajeGOT> vP : g.getVertices()) {
 			new ObservadorGOT(simulador, vP.getDatos());
 		}
-		//ObservadorGOT jon = new ObservadorGOT(simulador, g.getVertice("Jon Snow").getDatos());
-		
+
 		List<String> nombresPersonajes = g.getVertices().stream().map(v -> v.getDatos().getNombre()).collect(Collectors.toList());
 		
 		
@@ -123,7 +117,6 @@ public class SimuladorGOT extends Sujeto{
 		}
 							
 		System.out.println(simulador);
-	
 		
 	}
 

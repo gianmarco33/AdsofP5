@@ -1,5 +1,4 @@
 package adsof1718.grafos.got;
-import adsof1718.grafos.*;
 import java.util.*;
 
 public class PruebaApartado2 {

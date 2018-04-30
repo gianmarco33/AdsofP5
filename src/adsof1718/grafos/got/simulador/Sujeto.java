@@ -5,7 +5,6 @@ package adsof1718.grafos.got.simulador;
 
 import java.util.*;
 
-import adsof1718.grafos.got.*;
 /**
  * @author Dario Hernandez Barroso
  * @author Gianmarco Minelli Sierra
