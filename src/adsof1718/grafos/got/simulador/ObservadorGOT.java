@@ -27,8 +27,20 @@ public class ObservadorGOT extends Observador{
 		numInteraccionesCasa = 0;
 		numInteraccionesOtrasCasas = 0;
 		numInteraccionesTotales = 0;
+		s.addObservador(this);
 	}
 
+	public PersonajeGOT getPersonaje() {
+		return personaje;
+	}
+	
+	public String toString() {
+		return personaje.getNombre() + "\n"
+				+ "\tInteracciones: " + numInteraccionesTotales
+				+ "\n\tCon miembros de tu casa: " + numInteraccionesCasa
+				+ "\n\tCon miembros de casas ajenas: " + numInteraccionesOtrasCasas + "\n";
+	}
+	
 	@Override
 	public void update() {
 		SimuladorGOT simulador = (SimuladorGOT) super.sujeto;
@@ -36,8 +48,8 @@ public class ObservadorGOT extends Observador{
 		List<PersonajeGOT> destinos = simulador.getDestinos(); 
 		
 		numInteraccionesTotales += destinos.size();
-		numInteraccionesCasa = destinos.stream().filter(v -> v.getCasa().equals(origen.getCasa())).collect(Collectors.toList()).size();
-		numInteraccionesOtrasCasas = destinos.stream().filter(v -> !v.getCasa().equals(origen.getCasa())).collect(Collectors.toList()).size();
+		numInteraccionesCasa += destinos.stream().filter(v -> v.getCasa().equals(origen.getCasa())).collect(Collectors.toList()).size();
+		numInteraccionesOtrasCasas += destinos.stream().filter(v -> !v.getCasa().equals(origen.getCasa())).collect(Collectors.toList()).size();
 	}
 	
 	

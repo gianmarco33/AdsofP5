@@ -45,7 +45,9 @@ public class SimuladorGOT extends Sujeto{
 		this.redSocial = redSocial;
 	}
 
-
+	public void addObservador(ObservadorGOT o) {
+		listaObservadores.add(o);
+	}
 
 	public PersonajeGOT getOrigen() {
 		return personajeOrigen;
@@ -68,8 +70,7 @@ public class SimuladorGOT extends Sujeto{
 
 	@Override
 	public void notificar() {
-		// TODO Auto-generated method stub
-		
+		listaObservadores.stream().filter(v -> v.getPersonaje().equals(personajeOrigen)).forEach(v -> v.update());
 	}
 	
 	@Override
@@ -78,14 +79,36 @@ public class SimuladorGOT extends Sujeto{
 		Double denominador = redSocial.gradoPonderadoPersonajes().get(nombre);
 		Double probInteraccion = Math.random();
 		
-		redSocial.getVecinosDe(origen).stream().filter(v -> redSocial.getPesoDe(origen, v)/denominador < probInteraccion)
-			.map(v -> personajesDestino.add(v.getDatos()));
+		personajeOrigen = origen.getDatos();
 		
+		for(Vertice<PersonajeGOT> p : redSocial.getVecinosDe(origen)) {
+			if(redSocial.getPesoDe(origen, p)/denominador > probInteraccion) {
+				personajesDestino.add(p.getDatos());
+				//notificar(p.getDatos());
+			}		
+		}
+		notificar();
+		//redSocial.getVecinosDe(origen).stream().filter(v -> redSocial.getPesoDe(origen, v)/denominador > probInteraccion)
+		//	.map(v -> personajesDestino.add(v.getDatos()));
+		
+	}
+	
+	public String toString() {
+		String ret = "";
+		for(ObservadorGOT o: listaObservadores)
+			ret += o.toString();
+		
+		return ret;
 	}
 	
 	public static void main(String[] args) throws Exception {
 		GrafoGOT g = new GrafoGOT("got-s01-vertices.csv", "got-s01-arcos.csv");
 		SimuladorGOT simulador = new SimuladorGOT(g);
+		
+		for(Vertice<PersonajeGOT> vP : g.getVertices()) {
+			new ObservadorGOT(simulador, vP.getDatos());
+		}
+		//ObservadorGOT jon = new ObservadorGOT(simulador, g.getVertice("Jon Snow").getDatos());
 		
 		List<String> nombresPersonajes = g.getVertices().stream().map(v -> v.getDatos().getNombre()).collect(Collectors.toList());
 		
@@ -96,13 +119,11 @@ public class SimuladorGOT extends Sujeto{
 		for(int i=0; i<n; i++) {
 			int aleatorioVertice = rand.nextInt(nombresPersonajes.size());
 			String nombrePers = nombresPersonajes.get(aleatorioVertice);
-			
+			simulador.interaccion(nombrePers);
 		}
-					
-		
-		
-		
-		
+							
+		System.out.println(simulador);
+	
 		
 	}
 
