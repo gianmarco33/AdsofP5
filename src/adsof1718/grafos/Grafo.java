@@ -1,4 +1,4 @@
-/**
+	/**
  * 
  */
 package adsof1718.grafos;
@@ -14,6 +14,8 @@ public abstract class Grafo<T> {
 
 	protected Map<Integer, Vertice<T>> vertices;
 	protected Map<Integer,Map<Integer,Double>> arcos;
+	
+	
 	
 	/**
 	 * Anyade un vertice al grafo con los datos pasados.

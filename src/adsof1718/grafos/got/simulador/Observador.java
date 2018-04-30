@@ -10,5 +10,7 @@ package adsof1718.grafos.got.simulador;
  */
 
 public abstract class Observador {
-
+	protected Sujeto sujeto;
+	
+	public abstract void update();
 }
