@@ -43,11 +43,6 @@ public abstract class Grafo<T> {
 	 * @return Lista de vertices.
 	 */
 	public List<Vertice<T>> getVertices(){
-		/*List<Vertice<T>> laux = new ArrayList<Vertice<T>>();
-		for(Vertice<T> v : vertices.values()) {
-			laux.add(v);
-		}*/
-		//return laux;
 		return vertices.values().stream().collect(Collectors.toList());
 	}
 	
