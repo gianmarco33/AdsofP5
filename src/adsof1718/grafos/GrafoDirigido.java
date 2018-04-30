@@ -12,12 +12,19 @@ import java.util.*;
  */
 public class GrafoDirigido<T> extends Grafo<T>{
 	
-	//protected Map<Integer,Map<Integer,Double>> arcos;
+	/**
+	 * Constructor de la clase GrafoDirigido.
+	 * Crea los mapas de los arcos y vertices.
+	 */
 	public GrafoDirigido() {
 		
 		arcos = new HashMap<Integer,Map<Integer,Double>>();
 		vertices = new HashMap<Integer, Vertice<T>>();
 	}
+	
+	/**
+	 * @see Grafo#addArco(Vertice, Vertice, double)
+	 */
 	@Override
 	public void addArco(Vertice<T> v1, Vertice<T> v2, double peso) {
 		//super.arcos.get(v1.getId()).put(v2.getId(), peso);
@@ -26,6 +33,9 @@ public class GrafoDirigido<T> extends Grafo<T>{
 		arcos.get(v1.getId()).put(v2.getId(), peso);		
 	}
 	
+	/**
+	 * @see Grafo#existeArco(Vertice, Vertice)
+	 */
 	@Override
 	public boolean existeArco(Vertice<T> v1, Vertice<T> v2) {
 		if(arcos.containsKey(v1.getId()) == false)
@@ -35,10 +45,17 @@ public class GrafoDirigido<T> extends Grafo<T>{
 		return false;
 	}
 	
+	/**
+	 * @see Grafo#getNumArcos()
+	 */
 	@Override
 	public int getNumArcos() {
 		return arcos.size();
 	}
+	
+	/**
+	 * @see Grafo#getPesoDe(Vertice, Vertice)
+	 */
 	@Override
 	public double getPesoDe(Vertice<T> v1, Vertice<T> v2) {
 		if(existeArco(v1, v2) == true) {
@@ -46,6 +63,10 @@ public class GrafoDirigido<T> extends Grafo<T>{
 		}
 		return -1;
 	}
+	
+	/**
+	 * @see Grafo#getVecinosDe(Vertice)
+	 */
 	@Override
 	public List<Vertice<T>> getVecinosDe(Vertice<T> v) {
 		if(arcos.containsKey(v.getId()) == true) {
@@ -58,6 +79,4 @@ public class GrafoDirigido<T> extends Grafo<T>{
 		}
 		return null;
 	}
-
-
 }
