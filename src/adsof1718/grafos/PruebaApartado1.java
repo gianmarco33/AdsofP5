@@ -1,6 +1,11 @@
 package adsof1718.grafos;
 import java.util.*;
 
+/**
+ * @author Dario Hernandez Barroso
+ * @author Gianmarco Minelli Sierra
+ *
+ */
 
 public class PruebaApartado1 {
 	

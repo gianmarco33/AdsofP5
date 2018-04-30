@@ -10,7 +10,8 @@ import java.util.stream.Collectors;
 import java.io.*;
 
 /**
- * @author gianmarco
+ * @author Dario Hernandez Barroso
+ * @author Gianmarco Minelli Sierra
  *
  */
 public class GrafoGOT extends GrafoNoDirigido<PersonajeGOT>{

@@ -3,9 +3,9 @@
  */
 package adsof1718.grafos.got;
 
-
 /**
- * @author gianmarco
+ * @author Dario Hernandez Barroso
+ * @author Gianmarco Minelli Sierra
  *
  */
 public class PersonajeGOT{

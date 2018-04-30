@@ -6,8 +6,8 @@ package adsof1718.grafos;
 import java.util.*;
 
 /**
- * @author eps
- * @param <T>
+ * @author Dario Hernandez Barroso
+ * @author Gianmarco Minelli Sierra
  *
  */
 public class GrafoDirigido<T> extends Grafo<T>{

@@ -6,7 +6,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author gianmarco
+ * @author Dario Hernandez Barroso
+ * @author Gianmarco Minelli Sierra
  *
  */
 public abstract class Grafo<T> {

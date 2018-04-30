@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author eps
+ * @author Dario Hernandez Barroso
+ * @author Gianmarco Minelli Sierra
  *
  */
 public class GrafoNoDirigido<T> extends Grafo<T>{

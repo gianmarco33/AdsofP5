@@ -1,5 +1,11 @@
 package adsof1718.grafos;
 
+/**
+ * @author Dario Hernandez Barroso
+ * @author Gianmarco Minelli Sierra
+ *
+ */
+
 public class Vertice<T> {
 	private final int id;
 	private T datos;
