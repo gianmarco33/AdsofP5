@@ -52,7 +52,7 @@ public class SimuladorGOT extends Sujeto{
 	
 	/**
 	 * Devuelve la lista de personajes destino.
-	 * @return
+	 * @return Lista con los personajes destino 
 	 */
 	public List<PersonajeGOT> getDestinos(){
 		return personajesDestino;

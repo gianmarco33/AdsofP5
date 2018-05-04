@@ -23,7 +23,7 @@ public abstract class Sujeto {
 	
 	/**
 	 * Elimina un observador de la lista de observadores de sujeto.
-	 * @param o
+	 * @param o Observador a eliminar
 	 */
 	public abstract void detach(ObservadorGOT o);
 	
